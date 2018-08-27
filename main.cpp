@@ -16,6 +16,11 @@ int main(int argc, char **argv)
         std::cout << "Verbosity: " << arg << std::endl;
         args.markasoption();
       }
+    } else if ( opt == "o" || opt == "-output" ) {
+      if ( args.optarg(arg) ){
+        std::cout << "Output: " << arg << std::endl;
+        args.markasoption();
+      }
     } else {
         std::cout << "Option: " << opt << std::endl;
     }
