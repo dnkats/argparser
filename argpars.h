@@ -80,10 +80,10 @@ public:
   ArgPars() : _argc(0), _curarg(0), _nextlet(0) {}
   ArgPars(int argc, char **argv) : _argc(argc), _argv(argv), 
       _options(argc,false), _curarg(0), _nextlet(0) {}
-  // next option
-  bool nextoption(std::string & opt);
-  // next option
-  bool nextoption();
+  // next option, if clear is true: clear stored option info
+  bool nextoption(std::string & opt, bool clear = true);
+  // next option, if clear is true: clear stored option info
+  bool nextoption(bool clear = true);
   // add and check option
   bool check(const ArgOpt& aopt) { return _argopts.check(_opt,aopt); }
   // get current option
@@ -119,7 +119,8 @@ private:
 };
 
 
-bool ArgPars::nextoption() {
+bool ArgPars::nextoption(bool clear) {
+  if (clear) _argopts.clear();
   if ( _curarg >= _argc ) {
     _opt.clear();
     return false;
@@ -153,8 +154,8 @@ bool ArgPars::nextoption() {
   }
   return nextoption();
 }
-bool ArgPars::nextoption(std::string & opt) {
-  bool ret = nextoption();
+bool ArgPars::nextoption(std::string & opt, bool clear) {
+  bool ret = nextoption(clear);
   opt = _opt;
   return ret;
 }
